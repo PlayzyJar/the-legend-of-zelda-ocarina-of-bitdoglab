@@ -17,7 +17,7 @@
 #define change_note(note) pwm_set_clkdiv(slice_num, clock_get_hz(clk_sys) / (notas[note] * top))
 
 // configuracoes
-#define VOLUME_BUZZER 1024
+#define VOLUME_BUZZER 4096
 
 
 static uint slice_num;

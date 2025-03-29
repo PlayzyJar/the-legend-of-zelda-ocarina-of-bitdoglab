@@ -27,7 +27,20 @@
 #define sib 22
 #define si 23
 
-extern const float notas[24];
+#define doo 12
+#define reeb 13
+#define ree 14
+#define miib 15
+#define mii 16
+#define faa 17
+#define sollb 18
+#define soll 19
+#define laab 20
+#define laa 21
+#define siib 22
+#define sii 23
+
+extern const float notas[36];
 extern const int musica[];
 extern const int times_on[];
 extern const int times_off[];

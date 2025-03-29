@@ -35,16 +35,12 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-<<<<<<< Updated upstream
-add_executable(tocando-com-buzzers main.c )
-=======
 add_executable(tocando-com-buzzers 
     src/main.c
     src/timers_callback.c
     src/ocarina.c
     src/songs/song_of_storms.c
     )
->>>>>>> Stashed changes
 
 pico_set_program_name(tocando-com-buzzers "tocando-com-buzzers")
 pico_set_program_version(tocando-com-buzzers "0.1")
@@ -59,7 +55,12 @@ target_link_libraries(tocando-com-buzzers
         pico_stdio_usb
         hardware_clocks
         hardware_pwm
-        hardware_gpio)
+        hardware_gpio
+        hardware_dma
+        hardware_adc
+        hardware_i2c
+        hardware_pio
+        )
 
 # Add the standard include files to the build
 target_include_directories(tocando-com-buzzers PRIVATE

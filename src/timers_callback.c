@@ -13,8 +13,20 @@ void btn_callback(uint gpio, uint32_t events)
             if (events & GPIO_IRQ_EDGE_FALL)
             {
                 printf("Botão A pressionado\n");
-                play_state = play_state ? 0 : 1;
-                printf("playing: %d\n", play_state);
+
+                // Alterna entre pausado e tocando
+                if (music_state == MUSIC_PLAYING)
+                {
+                    music_state = MUSIC_PAUSED;
+                    should_stop_music = true; // Sinaliza para pausar
+                    printf("Música pausada\n");
+                    pwm_set_gpio_level(BUZZER_PIN, 0);
+                }
+                else
+                {
+                    music_state = MUSIC_PLAYING;
+                    printf("Música retomada\n");
+                }
             }
         }
         break;
