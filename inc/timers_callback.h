@@ -18,12 +18,20 @@ typedef enum {
     MUSIC_PAUSED
 } MusicState;
 
+typedef enum {
+    NOTE_OFF,
+    NOTE_PLAYING
+} NoteState;
+
 static volatile uint32_t last_interruption_b = 0;
 static volatile uint32_t last_interruption_a = 0;
 static volatile uint32_t last_interruption_jstck = 0;
 
 extern volatile MusicState music_state;
 extern volatile bool should_stop_music;
+
+extern volatile NoteState current_note_state;
+extern volatile int current_note_index;
 
 static volatile uint8_t play_state = 1;
 

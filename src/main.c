@@ -50,32 +50,38 @@ int main()
 
     joystick_init();
 
+    // play_song_of_storms();
 
     while (true)
     {
-        if (music_state == MUSIC_PLAYING)
-        {
-            for (int count = 0; count < 43; count++)
-            {
-                if (should_stop_music)
-                {
-                    should_stop_music = false; 
-                    break;
-                }
+        joystick_update(&js);
+        display_joystick_frame(js, cor, pio, sm, intensity);
 
-                pwm_set_gpio_level(BUZZER_PIN, VOLUME_BUZZER);
-                change_note(musica[count]);
-                sleep_us(times_on[count]);
 
-                pwm_set_gpio_level(BUZZER_PIN, 0);
-                sleep_us(times_off[count] / speed);
-            }
-        }
-        else
-        {
-            // Se estiver pausado, apenas espera um pouco para não travar o sistema
-            sleep_ms(100);
-        }
+        // if (music_state == MUSIC_PLAYING)
+        // {
+        //     for (int count = 0; count < 43; count++)
+        //     {
+        //         if (should_stop_music)
+        //         {
+        //             should_stop_music = false; 
+        //             break;
+        //         }
+
+        //         pwm_set_gpio_level(BUZZER_PIN, VOLUME_BUZZER);
+        //         change_note(musica[count]);
+        //         sleep_us(times_on[count]);
+
+        //         pwm_set_gpio_level(BUZZER_PIN, 0);
+        //         sleep_us(times_off[count] / speed);
+        //     }
+        // }
+        // else
+        // {
+        //     // Se estiver pausado, apenas espera um pouco para não travar o sistema
+        //     sleep_ms(100);
+        // }
+
+        sleep_us(100000);
     }
-    sleep_ms(2000);
 }
