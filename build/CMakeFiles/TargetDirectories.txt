@@ -1,4 +1,5 @@
 C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/CMakeFiles/tocando-com-buzzers.dir
+C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/CMakeFiles/tocando-com-buzzers_main_pio_h.dir
 C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/CMakeFiles/edit_cache.dir
 C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/CMakeFiles/rebuild_cache.dir
 C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/pico-sdk/CMakeFiles/edit_cache.dir

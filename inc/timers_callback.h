@@ -3,6 +3,7 @@
 
 #include "define_pins.h"
 #include "inc/ocarina.h"
+#include "inc/joystick.h"
 
 #include <stdbool.h>
 #include "pico/stdlib.h"
@@ -19,6 +20,7 @@ typedef enum {
 
 static volatile uint32_t last_interruption_b = 0;
 static volatile uint32_t last_interruption_a = 0;
+static volatile uint32_t last_interruption_jstck = 0;
 
 extern volatile MusicState music_state;
 extern volatile bool should_stop_music;
