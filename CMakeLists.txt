@@ -40,6 +40,13 @@ add_executable(tocando-com-buzzers
     src/timers_callback.c
     src/ocarina.c
     src/songs/song_of_storms.c
+    src/main_pio.c
+    src/led_functions.c
+    src/joystick.c
+    src/drivers/frames_3x5.c
+    src/drivers/frames_5x5.c     
+    src/drivers/letras_3x5.c
+    src/drivers/letras_5x5.c
     )
 
 pico_set_program_name(tocando-com-buzzers "tocando-com-buzzers")
@@ -66,6 +73,8 @@ target_link_libraries(tocando-com-buzzers
 target_include_directories(tocando-com-buzzers PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
+
+pico_generate_pio_header(tocando-com-buzzers ${CMAKE_CURRENT_LIST_DIR}/main.pio)
 
 # Add any user requested libraries
 target_link_libraries(tocando-com-buzzers 

@@ -37,8 +37,51 @@ void btn_callback(uint gpio, uint32_t events)
             last_interruption_b = current_time;
             if (events & GPIO_IRQ_EDGE_FALL)
             {
-                printf("Botão B pressionado\n");
-                reset_usb_boot(0, 0); // enter in bootsel mode
+                JoystickState state;
+                joystick_update(&state);
+
+                int note_to_play = OCARINA_NONE;
+
+                switch (state.direction)
+                {
+                case UP:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_DO_HIGH : OCARINA_DO;
+                    break;
+                case DOWN:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_RE + 12 : OCARINA_RE;
+                    break;
+                case LEFT:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_MI + 12 : OCARINA_MI;
+                    break;
+                case RIGHT:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_FA + 12 : OCARINA_FA;
+                    break;
+                case UP_LEFT:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_SOL + 12 : OCARINA_SOL;
+                    break;
+                case UP_RIGHT:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_LA + 12 : OCARINA_LA;
+                    break;
+                case DOWN_LEFT:
+                    note_to_play = (state.y_level == HIGH) ? OCARINA_SI + 12 : OCARINA_SI;
+                    break;
+                default:
+                    note_to_play = OCARINA_NONE; // CENTER ou direções não mapeadas
+                }
+
+                play_ocarina_note(note_to_play, 187500); // Toca por 187500µs
+            }
+        }
+        break;
+
+    case JSTICK:
+        if (current_time - last_interruption_jstck > DEBOUNCE_TIME)
+        {
+            last_interruption_jstck = current_time;
+            if (events & GPIO_IRQ_EDGE_FALL)
+            {
+                printf("Botão JSTICK pressionado\n");
+                reset_usb_boot(0, 0); // enter em bootsel mode
             }
         }
         break;

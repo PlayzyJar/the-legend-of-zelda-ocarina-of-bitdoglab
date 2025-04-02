@@ -11,5 +11,8 @@
 #define BTN_A 5
 #define BTN_B 6
 
+#define OUT_PIN 7
+#define JSTICK 22
+
 
 #endif
