@@ -15,10 +15,10 @@
 #define top 65535
 
 // função que muda as notas
-#define change_note(note) pwm_set_clkdiv(slice_num, clock_get_hz(clk_sys) / (notas[note] * top))
 
 // configuracoes
-#define VOLUME_BUZZER 1024
+#define VOLUME_BUZZER 512
+#define SEQUENCE_LENGTH 6
 
 // Notas da Ocarina (índices do array 'notas[]')
 typedef enum {
@@ -43,14 +43,29 @@ typedef enum {
     OCARINA_NONE     = -1  // Silêncio
 } OcarinaNotes;
 
+typedef struct {
+    int buffer[SEQUENCE_LENGTH];  // Notas tocadas
+    int current_index;            // Posição atual no buffer
+    bool is_sequence_correct;     // Flag de validação
+} NoteBuffer;
+
 static uint slice_num;
 
+extern NoteBuffer player_buffer;
 
 // Definição de uma função para inicializar o PWM no pino do buzzer
 void pwm_init_buzzer(uint pin, uint slice_num);
 
 void play_song_of_storms(void);
 
-void play_ocarina_note(int note_index, uint32_t duration_us);
+void play_ocarina_note(int note_index);
+
+void stop_ocarina_note(void);
+
+void change_note(int note);
+
+void reset_player_buffer(void);
+
+void check_note_sequence(int note);
 
 #endif

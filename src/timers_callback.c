@@ -1,5 +1,9 @@
 #include "inc/timers_callback.h"
 
+// Variáveis globais para controle da nota
+volatile NoteState current_note_state = NOTE_OFF;
+volatile int current_note_index = OCARINA_NONE;
+
 void btn_callback(uint gpio, uint32_t events)
 {
     uint32_t current_time = to_ms_since_boot(get_absolute_time());
@@ -37,39 +41,57 @@ void btn_callback(uint gpio, uint32_t events)
             last_interruption_b = current_time;
             if (events & GPIO_IRQ_EDGE_FALL)
             {
-                JoystickState state;
-                joystick_update(&state);
-
-                int note_to_play = OCARINA_NONE;
-
-                switch (state.direction)
+                if (current_note_state == NOTE_OFF)
                 {
-                case UP:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_DO_HIGH : OCARINA_DO;
-                    break;
-                case DOWN:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_RE + 12 : OCARINA_RE;
-                    break;
-                case LEFT:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_MI + 12 : OCARINA_MI;
-                    break;
-                case RIGHT:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_FA + 12 : OCARINA_FA;
-                    break;
-                case UP_LEFT:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_SOL + 12 : OCARINA_SOL;
-                    break;
-                case UP_RIGHT:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_LA + 12 : OCARINA_LA;
-                    break;
-                case DOWN_LEFT:
-                    note_to_play = (state.y_level == HIGH) ? OCARINA_SI + 12 : OCARINA_SI;
-                    break;
-                default:
-                    note_to_play = OCARINA_NONE; // CENTER ou direções não mapeadas
-                }
+                    // Tocar nova nota
+                    JoystickState state;
+                    joystick_update(&state);
 
-                play_ocarina_note(note_to_play, 187500); // Toca por 187500µs
+                    switch (state.direction)
+                    {
+                    case UP:
+                        current_note_index = (state.y_level == HIGH) ? OCARINA_DO_HIGH : OCARINA_DO;
+                        break;
+                    case UP_RIGHT:
+                        current_note_index = (state.y_level == HIGH) ? OCARINA_RE_HIGH : OCARINA_RE;
+                        break;
+                    case RIGHT:
+                        current_note_index = (state.x_level == HIGH) ? OCARINA_MI_HIGH : OCARINA_MI;
+                        break;
+                    case DOWN_RIGHT:
+                        current_note_index = (state.x_level == HIGH) ? OCARINA_FA_HIGH : OCARINA_FA;
+                        break;
+                    case DOWN_LEFT:
+                        current_note_index = (state.x_level == HIGH) ? OCARINA_SOL_HIGH : OCARINA_SOL;
+                        break;
+                    case LEFT:
+                        current_note_index = (state.x_level == HIGH) ? OCARINA_LA_HIGH : OCARINA_LA;
+                        break;
+                    case UP_LEFT:
+                        current_note_index = (state.y_level == HIGH) ? OCARINA_SI_HIGH : OCARINA_SI;
+                        break;
+                    default:
+                        current_note_index = OCARINA_NONE;
+                    }
+
+                    if (current_note_index != OCARINA_NONE)
+                    {
+                        play_ocarina_note(current_note_index);
+                        current_note_state = NOTE_PLAYING;
+                        printf("Nota iniciada: %d\n", current_note_index);
+                    }
+
+                    if (current_note_index != OCARINA_NONE) {
+                        check_note_sequence(current_note_index);  // <<< AQUI!
+                    }
+                }
+                else
+                {
+                    // Parar nota atual
+                    stop_ocarina_note();
+                    current_note_state = NOTE_OFF;
+                    printf("Nota parada\n");
+                }
             }
         }
         break;
