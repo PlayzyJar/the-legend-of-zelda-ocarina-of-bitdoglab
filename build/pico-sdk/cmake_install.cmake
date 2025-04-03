@@ -39,22 +39,22 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/pico-sdk/tools/cmake_install.cmake")
+  include("C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/the-legend-of-zelda-ocarina-of-bitdoglab/build/pico-sdk/tools/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/pico-sdk/src/cmake_install.cmake")
+  include("C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/the-legend-of-zelda-ocarina-of-bitdoglab/build/pico-sdk/src/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/pico-sdk/docs/cmake_install.cmake")
+  include("C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/the-legend-of-zelda-ocarina-of-bitdoglab/build/pico-sdk/docs/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/pico-sdk/install_local_manifest.txt"
+  file(WRITE "C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/the-legend-of-zelda-ocarina-of-bitdoglab/build/pico-sdk/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

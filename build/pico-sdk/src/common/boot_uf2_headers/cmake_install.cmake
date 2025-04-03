@@ -40,6 +40,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/tocando-com-buzzers/build/pico-sdk/src/common/boot_uf2_headers/install_local_manifest.txt"
+  file(WRITE "C:/Users/Elias/OneDrive/Documentos/Projeto BigDogLab/the-legend-of-zelda-ocarina-of-bitdoglab/build/pico-sdk/src/common/boot_uf2_headers/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

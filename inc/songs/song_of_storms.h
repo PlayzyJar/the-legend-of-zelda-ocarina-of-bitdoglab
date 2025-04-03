@@ -41,8 +41,13 @@
 #define sii 23
 
 extern const float notas[36];
-extern const int musica[];
-extern const int times_on[];
-extern const int times_off[];
+
+extern const int song_of_storms[];
+extern const int times_on_sofs[];
+extern const int times_off_sofs[];
+
+extern const int secret_tune[];
+extern const int times_on_st[];
+extern const int times_off_st[];
 
 #endif

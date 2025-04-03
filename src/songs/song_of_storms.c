@@ -44,7 +44,7 @@ const float notas[36] = {
     1975.533204  // SI6
 };
 
-const int musica[] = {
+const int song_of_storms[] = {
     RE, FA, re, RE, FA, re,
     mi, fa, mi, fa, mi, do, LA,
     LA, RE, FA, SOL, LA,
@@ -56,13 +56,18 @@ const int musica[] = {
     LA, RE
 };
 
+const int secret_tune[] = {
+    SOL, SOLb, MIb, LA, LAb,
+    MI, LAb, DO
+};
+
 // Clave de sol em 3/4 tempos
 // 1   750000 (semibreve)
 // 1/2 375000 (mínima)
 // 1/4 187500 (semínima)
 // 1/8 93750  (colcheia)
 
-const int times_on[] = {
+const int times_on_sofs[] = {
     93750, // RE
     187500, // FA
     375000, // rE
@@ -109,7 +114,7 @@ const int times_on[] = {
     1125000, // RE
 };
 
-const int times_off[] = {
+const int times_off_sofs[] = {
     0,  // RE
     50000,  // FA
     100000, // re
@@ -154,4 +159,26 @@ const int times_off[] = {
     100000, // LA
     50000, // LA
     200000, // RE
+};
+
+const int times_on_st[] = {
+    187500,
+    187500,
+    187500,
+    187500,
+    187500,
+    187500,
+    187500,
+    187500
+};
+
+const int times_off_st[] = {
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
 };

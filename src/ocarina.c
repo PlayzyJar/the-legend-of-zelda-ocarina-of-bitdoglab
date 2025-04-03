@@ -1,23 +1,32 @@
+/**
+ * @file ocarina.c
+ * @brief Implementation of ocarina music functions
+ */
+
 #include "inc/ocarina.h"
 
-// Definição de uma função para inicializar o PWM no pino do buzzer
-void pwm_init_buzzer(uint pin, uint slice_num)
-{
-    // Configurar o pino como saída de PWM
+/**
+ * @brief Initialize PWM hardware for buzzer
+ * 
+ * Configures GPIO pin for PWM output and sets default parameters
+ * 
+ * @param pin Buzzer GPIO pin
+ * @param slice_num PWM slice number
+ */
+void pwm_init_buzzer(uint pin, uint slice_num) {
     gpio_set_function(pin, GPIO_FUNC_PWM);
-
-    // Obter o slice do PWM associado ao pino
-
-    // Configurar o PWM com frequência desejada
     pwm_config config = pwm_get_default_config();
-
     pwm_init(slice_num, &config, true);
-
     pwm_set_gpio_level(pin, 0);
 }
 
+/**
+ * @brief Play Song of Storms melody
+ * 
+ * Plays predefined note sequence with proper timing
+ */
 void play_song_of_storms() {
-    uint8_t speed = 1; // Velocidade padrão (ajustável conforme necessário)
+    uint8_t speed = 1;
     
     for (int count = 0; count < 43; count++) {
         if (should_stop_music) {
@@ -26,11 +35,29 @@ void play_song_of_storms() {
         }
         
         pwm_set_gpio_level(BUZZER_PIN, VOLUME_BUZZER);
-        change_note(musica[count]);
-        sleep_us(times_on[count]);
+        change_note(song_of_storms[count]);
+        sleep_us(times_on_sofs[count]);
         
         pwm_set_gpio_level(BUZZER_PIN, 0);
-        sleep_us(times_off[count] / speed);
+        sleep_us(times_off_sofs[count] / speed);
+    }
+}
+
+void play_secret_tune() {
+    uint8_t speed = 1; // Velocidade padrão (ajustável conforme necessário)
+    
+    for (int count = 0; count < 8; count++) {
+        if (should_stop_music) {
+            should_stop_music = false;
+            break;
+        }
+        
+        pwm_set_gpio_level(BUZZER_PIN, VOLUME_BUZZER);
+        change_note(secret_tune[count]);
+        sleep_us(times_on_st[count]);
+        
+        pwm_set_gpio_level(BUZZER_PIN, 0);
+        sleep_us(times_off_st[count] / speed);
     }
 }
 
@@ -58,19 +85,22 @@ void change_note(int note) {
     pwm_set_gpio_level(BUZZER_PIN, VOLUME_BUZZER);
 }
 
-// Sequência correta (Song of Storms)
+/** Correct sequence for Song of Storms */
 const int song_of_storms_sequence[SEQUENCE_LENGTH] = {
     OCARINA_RE, OCARINA_FA, OCARINA_RE_HIGH, 
     OCARINA_RE, OCARINA_FA, OCARINA_RE_HIGH
 };
 
-// Buffer do jogador
+/** Global player note buffer instance */
 NoteBuffer player_buffer = {
     .buffer = {OCARINA_NONE}, 
     .current_index = 0,
     .is_sequence_correct = false
 };
 
+/**
+ * @brief Reset player's note sequence buffer
+ */
 void reset_player_buffer() {
     for (int i = 0; i < SEQUENCE_LENGTH; i++) {
         player_buffer.buffer[i] = OCARINA_NONE;
@@ -85,20 +115,15 @@ void check_note_sequence(int note) {
         reset_player_buffer();
     }
 
-    // Compara com a sequência de referência
     if (note == song_of_storms_sequence[player_buffer.current_index]) {
         player_buffer.buffer[player_buffer.current_index] = note;
         player_buffer.current_index++;
         
-        // Sequência completa?
         if (player_buffer.current_index == SEQUENCE_LENGTH) {
             player_buffer.is_sequence_correct = true;
-            sleep_us(50000);
-            printf("sequencia correta!");
-            play_song_of_storms();  // Toca a música completa!
-            reset_player_buffer();  // Prepara para próxima tentativa
+            game_state = STATE_VALIDATING; // Muda para estado de validação
         }
     } else {
-        reset_player_buffer();  // Nota errada, reseta tudo
+        reset_player_buffer();
     }
 }
